@@ -116,26 +116,15 @@ class DSKYDisplay:
         self.blink_state = False
 
     def _load_fonts(self):
-        """Load all required fonts"""
+        """Load all required fonts - using system fonts for Pi compatibility"""
         fonts = {}
-        font_path = self.config.display.font.path
 
-        try:
-            # Load DSEG7 font at different sizes
-            fonts['prog'] = pygame.font.Font(font_path, self.config.display.font.size_prog)
-            fonts['verb_noun'] = pygame.font.Font(font_path, self.config.display.font.size_verb_noun)
-            fonts['register'] = pygame.font.Font(font_path, self.config.display.font.size_register)
-            fonts['sign'] = pygame.font.Font(font_path, self.config.display.font.size_sign)
-            print(f"Loaded DSEG7 font from {font_path}")
-        except FileNotFoundError:
-            print(f"Warning: Font not found at {font_path}, using system font", file=sys.stderr)
-            # Fall back to system monospace font
-            fonts['prog'] = pygame.font.SysFont('monospace', self.config.display.font.size_prog)
-            fonts['verb_noun'] = pygame.font.SysFont('monospace', self.config.display.font.size_verb_noun)
-            fonts['register'] = pygame.font.SysFont('monospace', self.config.display.font.size_register)
-            fonts['sign'] = pygame.font.SysFont('monospace', self.config.display.font.size_sign)
-
-        # Font for error messages
+        print("Using system monospace font for Raspberry Pi compatibility")
+        # Use system monospace font directly (bold for better visibility)
+        fonts['prog'] = pygame.font.SysFont('monospace', self.config.display.font.size_prog, bold=True)
+        fonts['verb_noun'] = pygame.font.SysFont('monospace', self.config.display.font.size_verb_noun, bold=True)
+        fonts['register'] = pygame.font.SysFont('monospace', self.config.display.font.size_register, bold=True)
+        fonts['sign'] = pygame.font.SysFont('monospace', self.config.display.font.size_sign, bold=True)
         fonts['error'] = pygame.font.SysFont('monospace', self.config.error_display.font_size)
 
         return fonts
