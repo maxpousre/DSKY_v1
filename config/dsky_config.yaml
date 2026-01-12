@@ -1,0 +1,104 @@
+# DSKY Phase 1 Configuration File
+# Apollo DSKY Display System Configuration
+
+display:
+  # Screen resolution
+  resolution:
+    width: 480
+    height: 800
+
+  # Window settings
+  window_mode: windowed  # Options: windowed, fullscreen
+  window_title: "Apollo DSKY Display"
+
+  # Color scheme (hex format)
+  colors:
+    background: "#000000"      # Black background
+    foreground: "#00FF00"      # Bright green for active segments
+    foreground_dim: "#003300"  # Dark green for inactive segments
+    error_overlay: "#FF0000"   # Red for error messages
+
+  # Font settings
+  font:
+    path: "fonts/DSEG7Classic-Regular.ttf"
+    size_prog: 48        # PROG display size
+    size_verb_noun: 48   # VERB/NOUN display size
+    size_register: 36    # R1/R2/R3 digit size
+    size_sign: 30        # +/- indicator size
+
+  # Display update rate
+  fps: 60  # Target frames per second
+
+  # Simulation mode (set to true to run without yaAGC)
+  simulation_mode: false
+
+communication:
+  # yaAGC connection settings
+  yaagc:
+    host: "localhost"
+    port: 19799  # Default AGC port (19899 for AGS)
+    timeout: 10  # Connection timeout in seconds
+    reconnect_interval: 5  # Seconds between reconnection attempts
+    reconnect_max_attempts: 0  # 0 = infinite retries
+
+  # Peripheral settings (from piPeripheral.py)
+  pulse_rate: 0.05  # Event loop sleep time (seconds)
+  slow_mode: false  # Set to true for slow systems (0.25s pulse)
+
+# Display element positions (absolute pixel coordinates)
+layout:
+  prog:
+    x: 190
+    y: 50
+    spacing: 10  # Pixels between digits
+
+  verb:
+    x: 100
+    y: 150
+    spacing: 10
+
+  noun:
+    x: 280
+    y: 150
+    spacing: 10
+
+  register_1:
+    x: 80
+    y: 300
+    digit_spacing: 8
+    sign_x: 50  # Position of +/- indicator
+    sign_y: 300
+
+  register_2:
+    x: 80
+    y: 450
+    digit_spacing: 8
+    sign_x: 50
+    sign_y: 450
+
+  register_3:
+    x: 80
+    y: 600
+    digit_spacing: 8
+    sign_x: 50
+    sign_y: 600
+
+  comp_acty:
+    x: 360
+    y: 750
+    width: 100
+    height: 30
+
+# Error handling
+error_display:
+  enabled: true
+  message: "yaAGC CONNECTION LOST"
+  blink_rate: 1.0  # Blink every 1 second
+  font_size: 36
+
+# Logging configuration
+logging:
+  enabled: true
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "dsky.log"
+  console: true
