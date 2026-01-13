@@ -173,20 +173,15 @@ class AGCCommunicator:
 
         # Main loop
         while self.running:
-            # Check for timeout
-            if time.time() - self.last_packet_time > self.timeout:
-                print("Connection timeout - attempting reconnection...")
-                self.disconnect()
-                if not self.connect():
-                    print("Reconnection failed")
-                    time.sleep(self.reconnect_interval)
-                    continue
-
             # Try to receive packet
             packet = self.receive_packet()
             if packet:
                 channel, value = packet
                 self.process_packet(channel, value)
+
+            # Note: We don't check for timeout based on last packet time
+            # because yaAGC only sends packets when data changes.
+            # Connection errors are caught in receive_packet() instead.
 
             # Small sleep to avoid busy-waiting
             time.sleep(self.pulse)
