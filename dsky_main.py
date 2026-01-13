@@ -191,6 +191,9 @@ class AGCCommunicator:
         # Convert channel to octal for easier identification
         channel_octal = channel
 
+        # Debug: Print all received packets
+        print(f"Received: Channel {oct(channel_octal)} = {oct(value)} ({value})")
+
         if channel_octal == 0o10:  # Channel 10 - Display data
             decode_channel10(value, self.display_state)
 
