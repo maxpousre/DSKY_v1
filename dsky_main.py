@@ -68,10 +68,12 @@ class AGCCommunicator:
         while attempts < max_attempts:
             try:
                 self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                self.socket.setblocking(0)  # Non-blocking
-                self.socket.settimeout(self.timeout)
+                self.socket.settimeout(self.timeout)  # Set timeout for connection
                 self.socket.connect((self.host, self.port))
                 print("Connected to yaAGC!")
+
+                # Set to non-blocking after successful connection
+                self.socket.setblocking(0)
 
                 with self.display_state.lock:
                     self.display_state.connected = True
