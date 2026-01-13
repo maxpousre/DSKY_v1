@@ -75,6 +75,9 @@ class AGCCommunicator:
                 # Set to non-blocking after successful connection
                 self.socket.setblocking(0)
 
+                # Reset packet timer on successful connection
+                self.last_packet_time = time.time()
+
                 with self.display_state.lock:
                     self.display_state.connected = True
 
